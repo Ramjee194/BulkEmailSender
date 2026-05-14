@@ -1,78 +1,107 @@
-# 🚀 Bulk Email Sender - SvelteKit Frontend Migration Project
+# Bulk Email Sender - Professional SaaS Edition
 
-## 📋 Project Overview
+A modern, production-grade bulk email campaign manager built with SvelteKit and Hono. This project features a robust throttling engine, persistent scheduling, and a premium SaaS-style interface.
 
-This is a **Bulk Email Sender** web application currently built with **Hono** (backend) and vanilla **HTML/CSS/JavaScript** (frontend). Your assignment is to **migrate the frontend to SvelteKit** while maintaining the existing Hono backend functionality.
+## 🚀 Tech Stack
 
-### Current Tech Stack
-- **Backend**: Hono (Bun runtime)
-- **Frontend**: Vanilla HTML/CSS/JS with Bootstrap 5, Quill Editor
-- **Database**: SQLite (via Bun:sqlite)
-- **Authentication**: Argon2 password hashing with session tokens
-- **Email**: Nodemailer with SMTP
+### Frontend (Client)
+- **Framework**: SvelteKit 5 (Runes)
+- **Styling**: Tailwind CSS
+- **State Management**: TanStack Query (Server State) & Svelte Runes (Client State)
+- **Icons**: Lucide Svelte
+- **Editor**: Quill.js (WYSIWYG)
+- **Validation**: Zod
+- **Notifications**: Svelte Sonner
 
-### Target Tech Stack
-- **Backend**: Hono (keep as-is, migrate to Node.js/Deno with npm/pnpm/yarn)
-- **Frontend**: **SvelteKit** (modern, enhanced version)
-- **Database**: SQLite (maintain existing schema)
-- **State Management**: TanStack Query (optional)
-- **Authentication**: Same logic, adapted for SvelteKit
+### Backend (Server)
+- **Framework**: Hono (Node/Bun runtime)
+- **Database**: SQLite (via `bun:sqlite`)
+- **Email Engine**: Nodemailer
+- **Authentication**: Argon2 hashing & Signed HMAC-SHA256 sessions
+- **Storage**: Persistent scheduler and user databases
 
----
+## 📂 Project Structure
 
-## 🎯 Assignment Objectives
+```text
+├── server/               # Hono API Backend
+│   ├── src/
+│   │   ├── routes/       # API Endpoints
+│   │   ├── services/     # Business Logic (Email, Scheduler, DB)
+│   │   └── app.ts        # API Entry point
+│   ├── data/             # SQLite Databases
+│   └── uploads/          # Uploaded Assets
+├── src/                  # SvelteKit Frontend
+│   ├── lib/
+│   │   ├── api/          # API Service Layer (Centralized Client)
+│   │   ├── components/   # Reusable UI Components
+│   │   ├── stores/       # Auth & UI State (Runes)
+│   │   └── validations/  # Zod Schemas
+│   └── routes/           # Dashboard & Auth Pages
+└── static/               # Static Assets
+```
 
+## 🛠️ Setup Instructions
 
-### 1. **Implement SvelteKit Frontend**
-- ✅ Create a **modern, clean UI** using SvelteKit
-- ✅ Implement all existing features with enhanced UX
-- ✅ Add client-side validation and error handling
-- ✅ Implement responsive design (mobile-friendly)
+### 1. Prerequisites
+- Node.js 18+ or Bun 1.0+
 
-### 2. **Remove Old Frontend**
-- ✅ Delete `public/` folder (HTML, CSS, JS files)
-- ✅ Remove static file serving routes from backend (except API endpoints)
-- ✅ Ensure no dependencies on old frontend code
+### 2. Environment Configuration
+Create a `.env` file in the root:
+```env
+PUBLIC_API_BASE_URL=http://localhost:3000
+```
+Create a `.env` file in the `server/` directory:
+```env
+PORT=3000
+SESSION_SECRET=your_super_secret_key
+# Optional Global SMTP
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=465
+SMTP_SECURE=true
+SMTP_USER=your-email@gmail.com
+SMTP_PASS=your-app-password
+```
 
-### 3. **Update Documentation**
-- ✅ Update `README.md` with new architecture
-- ✅ Document setup instructions for both backend and frontend
-- ✅ Add API documentation
-- ✅ Include screenshots/demos of new UI
+### 3. Installation
+```bash
+# Install root (frontend) dependencies
+npm install
 
-## 🎨 UI/UX Requirements
+# Install backend dependencies
+cd server
+npm install
+```
 
-### Design Principles
-- **Clean and modern** design (avoid cluttered UI)
-- **Intuitive navigation** (clear tabs/sections)
-- **Responsive layout** (mobile, tablet, desktop)
-- **Accessible** (ARIA labels, keyboard navigation)
-- **Fast and performant** (lazy loading, optimistic updates)
+### 4. Running the Project
+Open two terminals:
 
+**Terminal 1 (Backend)**:
+```bash
+cd server
+npm run dev
+```
 
-## 💡 Pro Tips
+**Terminal 2 (Frontend)**:
+```bash
+npm run dev
+```
 
-1. **Use TypeScript strictly** - Helps catch errors early
-2. **Component first** - Build reusable components
-3. **API client abstraction** - Centralize API calls
-4. **Form validation** - Use Zod or similar library
-5. **Loading states everywhere** - Better UX
-6. **Error boundaries** - Graceful error handling
-7. **Optimistic updates** - Instant feedback
-8. **Debounce searches** - Reduce API calls
-9. **Lazy load routes** - Faster initial load
-10. **Test on mobile** - Responsive design matters
+## ✨ Key Features
 
+- **Professional API Layer**: Centralized fetch wrapper with request/response interceptors.
+- **Modern Auth Flow**: Secure session handling with route guards and persistent login state.
+- **Smart Throttling**: Batch email sending with customizable delays to prevent provider blocks.
+- **Persistent Scheduling**: Schedule campaigns to run in the future; survives server restarts.
+- **Recipient Management**: Bulk upload Excel/CSV files with instant preview and validation.
+- **Rich Text Composing**: Full WYSIWYG editor for professional email designs.
 
-## 📞 Questions?
+## 🔒 Security Improvements
+- **Signed Sessions**: Session tokens are cryptographically signed to prevent tampering.
+- **Argon2 Hashing**: Industry-leading password security.
+- **Strict CORS**: Restricted API access to authorized frontend origins.
+- **Validation**: Strict input validation using Zod on the frontend and schema-based checks on the backend.
 
-If you have questions during implementation:
-1. Check existing backend code for API behavior
-2. Review types.ts for data structures
-3. Test API endpoints with Postman/Thunder Client
-4. Read SvelteKit docs for routing/forms
-5. Use browser DevTools for debugging
-
----
-
-**Good luck! 🚀 Build something amazing!**
+## 📈 Future Enhancements
+- **Real-time Updates**: Integration with WebSockets (Hono + SvelteKit) for live progress tracking.
+- **Advanced Analytics**: Interactive charts for open rates and click-through rates.
+- **Template Gallery**: Save and reuse professional email templates.
